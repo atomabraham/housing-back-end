@@ -24,7 +24,15 @@ class RegisterRequest extends FormRequest
     {
         return [
             //les donnees qui vont etre reçus dans la requete
+            'userName' => 'string|max:255',
             'name' => 'required|string|max:255',
+            'secondname' => 'string|max:255',
+            'secondname' => 'string|max:255',
+            'phone' => 'integer',
+            'birthday' => 'date|max:255',
+            'country' => 'string|max:255',
+            'city' => 'string|max:255',
+            'postalcode' => 'string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => [
                 'required',

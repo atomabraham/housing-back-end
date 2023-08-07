@@ -17,8 +17,15 @@ class AuthController extends Controller
         $data = $request->validated();
 
         $user = User::create([
+            'userName' => $data['userName'],
             'name' => $data['name'],
+            'secondname' => $data['secondname'],
+            'phone' => $data['phone'],
+            'birthday' => $data['birthday'],
             'email' => $data['email'],
+            'country' => $data['country'],
+            'city' => $data['city'],
+            'postalcode' => $data['postalcode'],
             'password' => Hash::make($data['password']),
         ]);
 
@@ -27,6 +34,7 @@ class AuthController extends Controller
         $cookie = cookie('token', $token, 60 * 24); // 1 day
 
         return response()->json([
+            'message'=>'Inscription reussi',
             'user' => new UserResource($user),
         ])->withCookie($cookie);
     }
