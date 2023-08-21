@@ -67,11 +67,11 @@ class OptionPropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Option $option)
+    public function destroy(Request $request, Option $option, $id)
     {
-        $id = $request -> validate([
-            'id' => 'required'
-        ]);
+        // $id = $request -> validate([
+        //     'id' => 'required'
+        // ]);
 
         $option = Option :: where('id', $id) -> delete();
 

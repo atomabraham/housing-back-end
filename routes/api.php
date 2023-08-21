@@ -44,6 +44,6 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('/createOption',[OptionPropertyController::class,'store']);
 Route::get('/options',[OptionPropertyController::class,'index']);
 Route::get('/option',[OptionPropertyController::class,'show']);
-Route::post('/deleteOption',[OptionPropertyController::class,'destroy']);
+Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 
 //gestion des propriétés
