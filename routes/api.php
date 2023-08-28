@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OptionPropertyController;
+use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\UsersController;
 
 use Illuminate\Http\Request;
@@ -47,3 +48,6 @@ Route::get('/option',[OptionPropertyController::class,'show']);
 Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 
 //gestion des propriétés
+Route::post('/createProperties', [PropertiesController::class,'store']);
+Route::get('/properties', [PropertiesController::class,'index']);
+Route::get('/property/{id}',[PropertiesController::class,'show']);

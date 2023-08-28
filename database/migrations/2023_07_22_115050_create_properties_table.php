@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->longText('description');
-            $table->string('country');
-            $table->string('city');
-            $table->string('address');
-            $table->string('position');
-            $table->string('type');
-            $table->integer('price');
-            $table->integer('surface');
+            $table->string('propertyName');
+            $table->string('propertyType');
+            $table->string('propertyStatus');
             $table->integer('bedrooms');
             $table->integer('bathrooms');
+            $table->integer('area');
+            $table->integer('price') ;
+            $table->string('country') ;
+            $table->string('city') ;
+            $table->string('quartier') -> nullable();
+            $table->string('postalcode') -> nullable();
+            $table->longText('description');
+            $table->string('image');
+            $table->string('contactName');
+            $table->string('contactEmail');
+            $table->string('contactPhone');
+            $table->string('contactEnable') -> default('true');
             $table->timestamps();
         });
     }
