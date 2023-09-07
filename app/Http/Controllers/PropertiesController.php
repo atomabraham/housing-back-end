@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Propertie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class PropertiesController extends Controller
@@ -16,6 +17,11 @@ class PropertiesController extends Controller
     public function index()
     {
         $properties = Propertie::all();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
 
         return response() -> json($properties,200);
     }
@@ -33,17 +39,47 @@ class PropertiesController extends Controller
             'country' => 'required',
             'city' => 'required',
             'description' => 'required',
-            'image' => 'required|image',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'contactName' => 'required',
             'contactEmail' => 'required',
-            'contactEmail' => 'required',
+            'contactPhone' => 'required',
+            'agrement' => 'required',
             'contactPhone' => 'required',
         ]);
 
         try {
-            $imageName = Str::random().'.'.$request->image->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('images/properties', $request->image,$imageName);
-            Propertie::create($request->post()+['image'=>$imageName]);
+            // enregistrement d'une propriete
+            $property = new Propertie();
+            $photos = [];
+
+
+            foreach($request->file('images') as $photo) {
+                $path = $photo->store('images/properties', 'public');
+                $photos[] = $path;
+            }
+
+
+            $property->propertyName = $request -> input('propertyName');
+            $property->propertyType = $request -> input('propertyType');
+            $property->propertyStatus = $request -> input('propertyStatus');
+            $property->bedrooms = $request -> input('bedrooms');
+            $property->bathrooms = $request -> input('bathrooms');
+            $property->area = $request -> input('area');
+            $property->price = $request -> input('price');
+            $property->country = $request -> input('country');
+            $property->city = $request -> input('city');
+            $property->quartier = $request -> input('quartier');
+            $property->postalcode = $request -> input('postalcode');
+            $property->description = $request -> input('description');
+            $property->agrement = $request -> input('agrement');
+            $property->images = json_encode($photos);
+            $property->contactName = $request -> input('contactName');
+            $property->contactEmail = $request -> input('contactEmail');
+            $property->contactPhone = $request -> input('contactPhone');
+
+            $property->save();
+
 
             return response()->json([
                 'message'=>'Property Created Successfully!!'
