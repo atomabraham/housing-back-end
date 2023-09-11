@@ -51,3 +51,4 @@ Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/properties', [PropertiesController::class,'index']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
+Route::delete('/property/{id}',[PropertiesController::class,'destroy']);

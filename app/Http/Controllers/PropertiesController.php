@@ -99,6 +99,11 @@ class PropertiesController extends Controller
     {
         $property = Propertie :: where ('id', $id) -> get();
 
+        $property = json_decode($property);
+
+        $property[0] -> images = json_decode($property[0] -> images);
+
+
         return response() -> json ($property);
     }
 
@@ -121,8 +126,32 @@ class PropertiesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id, Propertie $property)
     {
         //
+        try{
+            $property = Propertie::where('id',$id);
+            // dd($property -> propertyName);
+            // $images []= $property -> images;
+            // if(count($images) > 0){
+            //     foreach ($property -> images as $image) {
+            //         $exist = Storage::disk('public') -> exists("{$images}");
+            //         if($exist){
+            //             Storage::disk('public') -> delete("{$image}");
+            //         }
+            //     }
+            // }
+            // $property -> delete();
+
+            // return response() -> json($property);
+
+            // echo($property->contactPhone);
+
+        }catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json([
+                'message'=>'Something goes wrong while deleting a product!!'
+            ]);
+        }
     }
 }
