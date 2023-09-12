@@ -103,6 +103,7 @@ class PropertiesController extends Controller
 
         $property[0] -> images = json_decode($property[0] -> images);
 
+        $property[0] -> agrement = json_decode($property[0] -> agrement);
 
         return response() -> json ($property);
     }
