@@ -13,24 +13,25 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table -> id();
-            $table -> string('propertyName') ->nullable();
-            $table -> string('propertyType') ->nullable();
-            $table -> string('propertyStatus') ->nullable();
-            $table -> integer('bedrooms') ->nullable();
-            $table -> integer('bathrooms') ->nullable();
-            $table -> integer('area') ->nullable();
-            $table -> integer('price') ->nullable() ;
-            $table -> string('country') ->nullable() ;
-            $table -> string('city') ->nullable() ;
+            $table -> integer('id_user') -> nullable();
+            $table -> string('propertyName');
+            $table -> string('propertyType');
+            $table -> string('propertyStatus');
+            $table -> integer('bedrooms');
+            $table -> integer('bathrooms');
+            $table -> integer('area');
+            $table -> integer('price');
+            $table -> string('country');
+            $table -> string('city');
             $table -> string('quartier') -> nullable();
             $table -> string('postalcode') -> nullable();
-            $table -> longText('description') ->nullable();
+            $table -> longText('description');
             $table -> json('agrement') -> nullable();
             $table -> json('images');
-            $table -> string('contactName') ->nullable();
-            $table -> string('contactEmail') ->nullable();
-            $table -> string('contactPhone') ->nullable();
-            $table -> string('contactEnable') -> default('true');
+            $table -> string('contactName');
+            $table -> string('contactEmail');
+            $table -> string('contactPhone');
+            // $table -> string('contactEnable');
             $table -> timestamps();
         });
     }

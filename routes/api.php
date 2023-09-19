@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OptionPropertyController;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UsersController;
 
 use Illuminate\Http\Request;
@@ -52,3 +53,6 @@ Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/properties', [PropertiesController::class,'index']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
 Route::delete('/property/{id}',[PropertiesController::class,'destroy']);
+
+//route de filtre
+Route::post('/search',[SearchController::class,'search']);

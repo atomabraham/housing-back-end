@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Propertie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Faker\Factory as Faker;
 
 class PropertiesController extends Controller
 {
@@ -16,7 +18,7 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = Propertie::all();
+        $properties = Propertie::orderBy('created_at', 'desc') -> get();
 
         // Décoder le champ "images" pour chaque propriété
         foreach ($properties as $property) {
@@ -60,6 +62,7 @@ class PropertiesController extends Controller
             }
 
 
+            $property->id_user = $request -> input('id_user');
             $property->propertyName = $request -> input('propertyName');
             $property->propertyType = $request -> input('propertyType');
             $property->propertyStatus = $request -> input('propertyStatus');
@@ -131,20 +134,21 @@ class PropertiesController extends Controller
     {
         //
         try{
-            $property = Propertie::where('id',$id);
+            $property = Propertie::where('id',$id) -> get();
             // dd($property -> propertyName);
-            // $images []= $property -> images;
-            // if(count($images) > 0){
-            //     foreach ($property -> images as $image) {
-            //         $exist = Storage::disk('public') -> exists("{$images}");
-            //         if($exist){
-            //             Storage::disk('public') -> delete("{$image}");
-            //         }
-            //     }
-            // }
-            // $property -> delete();
+            $images []= $property -> images;
+            if(count($images) > 0){
+                foreach ($property -> images as $image) {
+                    $exist = Storage::disk('public') -> exists("{$images}");
+                    if($exist){
+                        Storage::disk('public') -> delete("{$image}");
+                    }
+                }
+            }
+            $property -> delete();
+            echo ($property);
 
-            // return response() -> json($property);
+            return response() -> json([]);
 
             // echo($property->contactPhone);
 
@@ -154,5 +158,55 @@ class PropertiesController extends Controller
                 'message'=>'Something goes wrong while deleting a product!!'
             ]);
         }
+    }
+
+    //generer les donnees fictives
+    public function genererFake()
+    {
+        $faker = Faker::create();
+
+        $properties = [];
+
+        for ($i = 0; $i < 100; $i++) {
+            $property = new Propertie();
+
+            $images = [];
+
+            for ($i = 0; $i < random_int(1, 10); $i++) {
+                $imagePath = 'images/properties/' . Str::random(10) . '.jpg'; // Génère un nom de fichier aléatoire
+                $image = Image::make($faker->imageUrl())->encode('jpg', 80); // Génère une image à partir de l'URL aléatoire
+                Storage::disk('public')->put($imagePath, $image); // Sauvegarde l'image dans le dossier public
+
+                $images[] = $imagePath;
+            }
+
+            // $bienImmobilier = [
+                $property -> id_user = $faker->numberBetween(1, 1);
+                $property -> propertyName = $faker->word;
+                $property -> propertyType = $faker->randomElement(['Appartement', 'Maison', 'Villa']);
+                $property -> propertyStatus = $faker->randomElement(['A vendre', 'A louer']);
+                $property -> bedrooms = $faker->numberBetween(1, 5);
+                $property -> bathrooms = $faker->numberBetween(1, 3);
+                $property -> area = $faker->numberBetween(50, 200);
+                $property -> price = $faker->numberBetween(100000, 500000);
+                $property -> country = $faker->country;
+                $property -> city = $faker->city;
+                $property -> description = $faker->paragraph;
+                $property -> images = json_encode($images);
+                $property -> contactName = $faker->name;
+                $property -> contactEmail = $faker->email;
+                $property -> contactPhone = $faker->phoneNumber;
+            // ];
+
+            $property -> save();
+
+            $properties[] = $property;
+        }
+
+
+
+        return response() -> json($properties);
+
+
     }
 }
