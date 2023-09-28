@@ -34,10 +34,14 @@ Route::get('/users',[UsersController::class,'index']);
 //route qui verifie si une adresse email est deja prise
 Route::post('/emailVerification',[UsersController::class,'UserExist']);
 
+//modification du profile
+Route::post('/updateProfilePicture/{user}',[UsersController::class,'ProfilePicture']);
+Route::post('/updateInformationUser/{user}',[UsersController::class,'UpdateInformationUser']);
+
 //routes de deconnexion et d'affichage des information de l'utilisateur
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [AuthController::class, 'userss']);
+    Route::get('/user', [AuthController::class, 'users']);
 });
 
 /*routes de gestion des propriétés*/

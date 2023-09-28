@@ -123,3 +123,7 @@ return [
     ],
 
 ];
+
+/* Configuration des parametres SMTP */
+
+// 'driver' = env('MAIL_DRIVER', 'smtp'); // Utilise le pilote SMTP pour l'envoi d'e-mails

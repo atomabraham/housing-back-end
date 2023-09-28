@@ -72,7 +72,7 @@ class AuthController extends Controller
     }
 
     // get the authenticated user method
-    public function userss(Request $request) {
+    public function users(Request $request) {
         return new UserResource($request->user());
         // return response() -> json([$request->user()]);
     }
