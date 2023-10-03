@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table -> id();
+            $table -> integer('views') -> default(0);
             $table -> integer('id_user') -> nullable();
             $table -> string('propertyName');
             $table -> string('propertyType');

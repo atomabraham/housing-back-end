@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
+use Psy\Readline\Hoa\Console;
 
 class PropertiesController extends Controller
 {
@@ -208,5 +209,20 @@ class PropertiesController extends Controller
         return response() -> json($properties);
 
 
+    }
+
+    //Gestion des vues de proprietes
+    public function viewProperties (Request $request, Propertie $property)
+    {
+        $property = Propertie::where('id',$property -> id) -> get();
+
+        // $property->update($request->except(['views']));
+
+
+        // $i = $property -> views;
+        $property[0] -> views += 1;
+
+        $property[0] -> save();
+        return response() -> json($property);
     }
 }

@@ -57,6 +57,7 @@ Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/properties', [PropertiesController::class,'index']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
 Route::delete('/property/{id}',[PropertiesController::class,'destroy']);
+Route::put('/viewProperties/{property}',[PropertiesController::class,'viewProperties']);
 
 //route de filtre
 Route::post('/search',[SearchController::class,'search']);
