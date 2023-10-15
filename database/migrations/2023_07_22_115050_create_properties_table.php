@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table -> id();
             $table -> integer('views') -> default(0);
-            $table -> integer('id_user') -> nullable();
+            $table -> integer('id_user');
             $table -> string('propertyName');
             $table -> string('propertyType');
             $table -> string('propertyStatus');
@@ -32,6 +32,11 @@ return new class extends Migration
             $table -> string('contactName');
             $table -> string('contactEmail');
             $table -> string('contactPhone');
+            $table -> integer('monthtopay') -> nullable();
+            $table -> integer('caussion') -> nullable();
+            $table -> string('vendu') -> default('false');
+            $table -> string('active') -> default('false');
+
             // $table -> string('contactEnable');
             $table -> timestamps();
         });

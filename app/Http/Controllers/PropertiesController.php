@@ -19,7 +19,7 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = Propertie::orderBy('created_at', 'desc') -> get();
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'true') -> get();
 
         // Décoder le champ "images" pour chaque propriété
         foreach ($properties as $property) {
@@ -115,15 +115,66 @@ class PropertiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function update(Request $request, Propertie $property)
     {
-        //
+        try{
+            $request -> validate([
+                'propertyName' => 'required',
+                'propertyType' => 'required',
+                'propertyStatus' => 'required',
+                'price' => 'required|integer',
+                'country' => 'required',
+                'city' => 'required',
+                'description' => 'required',
+                'images' => 'required|array',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'contactName' => 'required',
+                'contactEmail' => 'required',
+                'contactPhone' => 'required',
+                'agrement' => 'required',
+                'contactPhone' => 'required',
+            ]);
+
+            $property -> update($request -> except('propertyName','propertyType','propertyStatus','price','city','description','images','contactName','contactEmail','agrement','contactPhone'));
+
+            // $property->id_user = $request -> input('id_user');
+            $property->propertyName = $request -> input('propertyName');
+            $property->propertyType = $request -> input('propertyType');
+            $property->propertyStatus = $request -> input('propertyStatus');
+            $property->bedrooms = $request -> input('bedrooms');
+            $property->bathrooms = $request -> input('bathrooms');
+            $property->area = $request -> input('area');
+            $property->price = $request -> input('price');
+            $property->country = $request -> input('country');
+            $property->city = $request -> input('city');
+            $property->quartier = $request -> input('quartier');
+            $property->postalcode = $request -> input('postalcode');
+            $property->description = $request -> input('description');
+            $property->agrement = $request -> input('agrement');
+            // $property->images = json_encode($photos);
+            // $property->contactName = $request -> input('contactName');
+            // $property->contactEmail = $request -> input('contactEmail');
+            // $property->contactPhone = $request -> input('contactPhone');
+
+            $property->save();
+
+
+            return response()->json([
+                'message'=>'Property updated Successfully!!'
+            ]);
+
+        }catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function edit(Request $request, string $id)
     {
         //
     }
@@ -225,4 +276,43 @@ class PropertiesController extends Controller
         $property[0] -> save();
         return response() -> json($property);
     }
+
+    //recuperation des biens à activer
+    public function propertiesToActive (){
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'false') -> get();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
+
+        return response() -> json($properties,200);
+    }
+
+    //validation d'une propriete
+    public function validateProperty (Request $request, Propertie $property){
+
+        $property -> update($request -> except('active'));
+
+        $property -> active = "true";
+
+        $property -> save();
+
+    }
+
+    //select properties of user
+
+    public function PropertiesUser (Request $request, $id){
+        // $this->validate($request,[
+        //     'id_user'=>'required',
+        // ]);
+
+        // $id_user = $request -> input('id_user');
+
+        $propertiesUser = Propertie::where('id_user', $id ) -> get();
+
+        return response() -> json($propertiesUser);
+
+    }
 }
+

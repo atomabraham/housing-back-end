@@ -53,11 +53,16 @@ Route::get('/option',[OptionPropertyController::class,'show']);
 Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 
 //gestion des propriétés
-Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/properties', [PropertiesController::class,'index']);
+Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
+Route::put('/propertyEdit/{property}',[PropertiesController::class,'update']);
 Route::delete('/property/{id}',[PropertiesController::class,'destroy']);
-Route::put('/viewProperties/{property}',[PropertiesController::class,'viewProperties']);
+Route::post('/viewProperties/{property}',[PropertiesController::class,'viewProperties']);
+Route::get('propertyUsers/{id}',[PropertiesController::class,'PropertiesUser']);
+Route::get('/propertiesToActive',[PropertiesController::class,'propertiesToActive']);
+Route::get('/propertiesToActive',[PropertiesController::class,'propertiesToActive']);
+Route::post('/validateProperty/{property}',[PropertiesController::class,'validateProperty']);
 
 //route de filtre
 Route::post('/search',[SearchController::class,'search']);

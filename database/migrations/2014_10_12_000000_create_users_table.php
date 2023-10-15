@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('postalCode')->nullable();
             $table->string('role')->default('User');
             $table->string('status')->default('enable');
+            $table -> string('active') -> default('true');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

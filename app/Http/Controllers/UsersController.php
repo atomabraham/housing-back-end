@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Models\Propertie;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Builder\Property;
 
 class UsersController extends Controller
 {
@@ -85,8 +87,9 @@ class UsersController extends Controller
             ], 500);
         }
     }
-        //update information user
-        public function UpdateInformationUser (Request $request, User $user) {
+
+    //update information user
+    public function UpdateInformationUser (Request $request, User $user) {
             try {
                 $request ->validate([
                     'userName' => 'nullable',
@@ -120,6 +123,9 @@ class UsersController extends Controller
                     'errors' => $e->errors()
                 ], 422);
             }
-        }
+    }
+
+
+    
 }
 
