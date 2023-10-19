@@ -117,58 +117,53 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, Propertie $property)
     {
-        try{
-            $request -> validate([
-                'propertyName' => 'required',
-                'propertyType' => 'required',
-                'propertyStatus' => 'required',
-                'price' => 'required|integer',
-                'country' => 'required',
-                'city' => 'required',
-                'description' => 'required',
-                'images' => 'required|array',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-                'contactName' => 'required',
-                'contactEmail' => 'required',
-                'contactPhone' => 'required',
-                'agrement' => 'required',
-                'contactPhone' => 'required',
-            ]);
+        $request -> validate([
+            'propertyName' => 'required',
+            'propertyType' => 'required',
+            'propertyStatus' => 'required',
+            'price' => 'required|integer',
+            'country' => 'required',
+            'city' => 'required',
+            'description' => 'required',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'contactName' => 'required',
+            'contactEmail' => 'required',
+            'contactPhone' => 'required',
+            'agrement' => 'required',
+            'contactPhone' => 'required',
+        ]);
+        // try{
 
-            $property -> update($request -> except('propertyName','propertyType','propertyStatus','price','city','description','images','contactName','contactEmail','agrement','contactPhone'));
+        //     // $property -> update($request -> except('propertyName','propertyType','propertyStatus','price','city','description','contactName','contactEmail','contactPhone'));
 
-            // $property->id_user = $request -> input('id_user');
-            $property->propertyName = $request -> input('propertyName');
-            $property->propertyType = $request -> input('propertyType');
-            $property->propertyStatus = $request -> input('propertyStatus');
-            $property->bedrooms = $request -> input('bedrooms');
-            $property->bathrooms = $request -> input('bathrooms');
-            $property->area = $request -> input('area');
-            $property->price = $request -> input('price');
-            $property->country = $request -> input('country');
-            $property->city = $request -> input('city');
-            $property->quartier = $request -> input('quartier');
-            $property->postalcode = $request -> input('postalcode');
-            $property->description = $request -> input('description');
-            $property->agrement = $request -> input('agrement');
-            // $property->images = json_encode($photos);
-            // $property->contactName = $request -> input('contactName');
-            // $property->contactEmail = $request -> input('contactEmail');
-            // $property->contactPhone = $request -> input('contactPhone');
+        //     // $property->propertyName = $request -> input('propertyName');
+        //     // $property->propertyType = $request -> input('propertyType');
+        //     // $property->propertyStatus = $request -> input('propertyStatus');
+        //     // $property->bedrooms = $request -> input('bedrooms');
+        //     // $property->bathrooms = $request -> input('bathrooms');
+        //     // $property->area = $request -> input('area');
+        //     // $property->price = $request -> input('price');
+        //     // $property->country = $request -> input('country');
+        //     // $property->city = $request -> input('city');
+        //     // $property->quartier = $request -> input('quartier');
+        //     // $property->postalcode = $request -> input('postalcode');
+        //     // $property->description = $request -> input('description');
+        //     // $property->agrement = $request -> input('agrement');
 
-            $property->save();
+        //     // $property->save();
 
 
-            return response()->json([
-                'message'=>'Property updated Successfully!!'
-            ]);
+        //     // return response()->json([
+        //     //     'message'=>'Property updated Successfully!!'
+        //     // ]);
 
-        }catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation error',
-                'errors' => $e->errors()
-            ], 422);
-        }
+        // }catch (ValidationException $e) {
+        //     return response()->json([
+        //         'message' => 'Validation error',
+        //         'errors' => $e->errors()
+        //     ], 422);
+        // }
     }
 
     /**
@@ -303,11 +298,6 @@ class PropertiesController extends Controller
     //select properties of user
 
     public function PropertiesUser (Request $request, $id){
-        // $this->validate($request,[
-        //     'id_user'=>'required',
-        // ]);
-
-        // $id_user = $request -> input('id_user');
 
         $propertiesUser = Propertie::where('id_user', $id ) -> get();
 

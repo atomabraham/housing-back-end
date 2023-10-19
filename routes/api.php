@@ -56,7 +56,7 @@ Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 Route::get('/properties', [PropertiesController::class,'index']);
 Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
-Route::put('/propertyEdit/{property}',[PropertiesController::class,'update']);
+Route::put('/propertyEdit/{id}',[PropertiesController::class,'update']);
 Route::delete('/property/{id}',[PropertiesController::class,'destroy']);
 Route::post('/viewProperties/{property}',[PropertiesController::class,'viewProperties']);
 Route::get('propertyUsers/{id}',[PropertiesController::class,'PropertiesUser']);
