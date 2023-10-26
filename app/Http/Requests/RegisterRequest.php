@@ -32,7 +32,7 @@ class RegisterRequest extends FormRequest
             'birthday' => 'date|max:255',
             'country' => 'string|max:255',
             'city' => 'string|max:255',
-            'postalcode' => 'string|max:255',
+            // 'postalcode' => 'string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => [
                 'required',

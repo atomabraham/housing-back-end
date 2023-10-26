@@ -35,6 +35,7 @@ return new class extends Migration
             $table -> integer('monthtopay') -> nullable();
             $table -> integer('caussion') -> nullable();
             $table -> string('vendu') -> default('false');
+            $table -> string('reserver') -> default('false');
             $table -> string('active') -> default('false');
 
             // $table -> string('contactEnable');

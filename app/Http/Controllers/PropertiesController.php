@@ -19,7 +19,43 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'true') -> get();
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'true') ->where('vendu','false') ->where('reserver','false') -> get();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
+
+        return response() -> json($properties,200);
+    }
+
+    //recuperation des biens à activer
+    public function propertiesToActive (){
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'false') -> get();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
+
+        return response() -> json($properties,200);
+    }
+
+    //recuperation des biens reserveés
+    public function propertiesReserved (){
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('reserver', 'true') -> get();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
+
+        return response() -> json($properties,200);
+    }
+
+    //recuperation des biens vendu
+    public function propertiesVendu (){
+        $properties = Propertie::orderBy('created_at', 'desc') -> where('vendu', 'true') -> get();
 
         // Décoder le champ "images" pour chaque propriété
         foreach ($properties as $property) {
@@ -270,18 +306,6 @@ class PropertiesController extends Controller
 
         $property[0] -> save();
         return response() -> json($property);
-    }
-
-    //recuperation des biens à activer
-    public function propertiesToActive (){
-        $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'false') -> get();
-
-        // Décoder le champ "images" pour chaque propriété
-        foreach ($properties as $property) {
-            $property->images = json_decode($property->images);
-        }
-
-        return response() -> json($properties,200);
     }
 
     //validation d'une propriete

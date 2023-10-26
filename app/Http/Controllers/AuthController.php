@@ -25,7 +25,7 @@ class AuthController extends Controller
             'email' => $data['email'],
             'country' => $data['country'],
             'city' => $data['city'],
-            'postalcode' => $data['postalcode'],
+            // 'postalcode' => $data['postalcode'],
             'password' => Hash::make($data['password']),
         ]);
 

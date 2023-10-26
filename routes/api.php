@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OptionPropertyController;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UsersController;
 
@@ -34,7 +35,7 @@ Route::get('/users',[UsersController::class,'index']);
 //route qui verifie si une adresse email est deja prise
 Route::post('/emailVerification',[UsersController::class,'UserExist']);
 
-//modification du profile
+//Routes modification du profile
 Route::post('/updateProfilePicture/{user}',[UsersController::class,'ProfilePicture']);
 Route::post('/updateInformationUser/{user}',[UsersController::class,'UpdateInformationUser']);
 
@@ -44,15 +45,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', [AuthController::class, 'users']);
 });
 
-/*routes de gestion des propriétés*/
 
-//gestion des options de propriété
+//Routes de gestion des options de propriété
 Route::post('/createOption',[OptionPropertyController::class,'store']);
 Route::get('/options',[OptionPropertyController::class,'index']);
 Route::get('/option',[OptionPropertyController::class,'show']);
 Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 
-//gestion des propriétés
+/*routes de gestion des propriétés*/
 Route::get('/properties', [PropertiesController::class,'index']);
 Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
@@ -61,8 +61,14 @@ Route::delete('/property/{id}',[PropertiesController::class,'destroy']);
 Route::post('/viewProperties/{property}',[PropertiesController::class,'viewProperties']);
 Route::get('propertyUsers/{id}',[PropertiesController::class,'PropertiesUser']);
 Route::get('/propertiesToActive',[PropertiesController::class,'propertiesToActive']);
-Route::get('/propertiesToActive',[PropertiesController::class,'propertiesToActive']);
+Route::get('/propertiesReserved',[PropertiesController::class,'propertiesReserved']);
+Route::get('/propertiesVendu',[PropertiesController::class,'propertiesVendu']);
 Route::post('/validateProperty/{property}',[PropertiesController::class,'validateProperty']);
 
 //route de filtre
 Route::post('/search',[SearchController::class,'search']);
+
+//route de gestion des reservation
+Route::post('/reservation',[ReservationController::class,'store']);
+Route::post('/updatePropertyReserved/{property}',[ReservationController::class,'updateproperty']);
+
