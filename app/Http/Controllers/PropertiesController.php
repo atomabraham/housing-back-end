@@ -17,6 +17,21 @@ class PropertiesController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function allPropertie()
+    {
+        $properties = Propertie::orderBy('created_at', 'desc') -> get();
+
+        // Décoder le champ "images" pour chaque propriété
+        foreach ($properties as $property) {
+            $property->images = json_decode($property->images);
+        }
+
+        return response() -> json($properties,200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $properties = Propertie::orderBy('created_at', 'desc') -> where('active', 'true') ->where('vendu','false') ->where('reserver','false') -> get();

@@ -54,6 +54,7 @@ Route::delete('/deleteOption/{id}',[OptionPropertyController::class,'destroy']);
 
 /*routes de gestion des propriétés*/
 Route::get('/properties', [PropertiesController::class,'index']);
+Route::get('/allPropertie', [PropertiesController::class,'allPropertie']);
 Route::post('/createProperties', [PropertiesController::class,'store']);
 Route::get('/property/{id}',[PropertiesController::class,'show']);
 Route::put('/propertyEdit/{id}',[PropertiesController::class,'update']);
@@ -69,6 +70,7 @@ Route::post('/validateProperty/{property}',[PropertiesController::class,'validat
 Route::post('/search',[SearchController::class,'search']);
 
 //route de gestion des reservation
+Route::get('/allReservation',[ReservationController::class,'index']);
 Route::post('/reservation',[ReservationController::class,'store']);
 Route::post('/updatePropertyReserved/{property}',[ReservationController::class,'updateproperty']);
 
