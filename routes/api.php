@@ -65,6 +65,7 @@ Route::get('/propertiesToActive',[PropertiesController::class,'propertiesToActiv
 Route::get('/propertiesReserved',[PropertiesController::class,'propertiesReserved']);
 Route::get('/propertiesVendu',[PropertiesController::class,'propertiesVendu']);
 Route::post('/validateProperty/{property}',[PropertiesController::class,'validateProperty']);
+Route::post('/soldProperty/{property}',[PropertiesController::class,'setSold']);
 
 //route de filtre
 Route::post('/search',[SearchController::class,'search']);
@@ -72,5 +73,6 @@ Route::post('/search',[SearchController::class,'search']);
 //route de gestion des reservation
 Route::get('/allReservation',[ReservationController::class,'index']);
 Route::post('/reservation',[ReservationController::class,'store']);
-Route::post('/updatePropertyReserved/{property}',[ReservationController::class,'updateproperty']);
+Route::post('/updatePropertyReserved/{property}',[ReservationController::class,'updatePropertyReserced']);
+Route::post('/confirmationReservation/{property}',[ReservationController::class,'confirmationReservation']);
 

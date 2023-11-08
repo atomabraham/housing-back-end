@@ -343,5 +343,15 @@ class PropertiesController extends Controller
         return response() -> json($propertiesUser);
 
     }
+
+    //mettre un bien comme vendu
+    public function setSold(Request $request, Propertie $property){
+        $property -> update($request -> except('vendu'));
+
+        $property -> vendu = "true";
+
+        $property -> save();
+
+    }
 }
 
